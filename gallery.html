@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Gallery – Grace Collections</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+#gallery-wrap{padding:5rem 3rem;background:var(--ivory)}
+.gallery-filter{display:flex;gap:.8rem;justify-content:center;margin-bottom:3rem;flex-wrap:wrap}
+.gf-btn{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;padding:.55rem 1.4rem;border:1px solid rgba(0,0,0,.12);color:var(--muted);cursor:pointer;transition:.3s;background:none}
+.gf-btn.active{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-auto-rows:280px;
+  gap:1rem;
+}
+.g-item{position:relative;overflow:hidden;cursor:pointer}
+.g-item.wide{grid-column:span 2}
+.g-item.tall{grid-row:span 2}
+.g-item img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease}
+.g-item:hover img{transform:scale(1.08)}
+.g-ov{position:absolute;inset:0;background:rgba(26,20,16,.0);display:flex;align-items:center;justify-content:center;transition:background .4s}
+.g-ov span{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--white);opacity:0;transition:opacity .4s;background:var(--gold);padding:.5rem 1rem}
+.g-item:hover .g-ov{background:rgba(26,20,16,.35)}
+.g-item:hover .g-ov span{opacity:1}
+/* lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(26,20,16,.95);z-index:900;align-items:center;justify-content:center}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90vw;max-height:88vh;object-fit:contain}
+.lb-close{position:absolute;top:1.5rem;right:2rem;font-size:2rem;color:var(--cream);cursor:pointer;line-height:1}
+.lb-prev,.lb-next{position:absolute;top:50%;transform:translateY(-50%);font-size:2rem;color:var(--cream);cursor:pointer;background:rgba(255,255,255,.08);width:50px;height:50px;display:flex;align-items:center;justify-content:center}
+.lb-prev{left:1.5rem}.lb-next{right:1.5rem}
+@media(max-width:1024px){.gallery-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:240px}}
+@media(max-width:700px){.gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:200px}.g-item.wide,.g-item.tall{grid-column:auto;grid-row:auto}#gallery-wrap{padding:4rem 1.5rem}}
+@media(max-width:480px){.gallery-grid{grid-template-columns:1fr;grid-auto-rows:260px}}
+</style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><span>Grace</span> Collections</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="shop.html">Shop</a>
+    <a href="about.html">About</a><a href="gallery.html" class="active">Gallery</a><a href="contact.html">Contact</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Visit Us</a>
+  <div class="hamburger" id="ham"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html" onclick="closeMob()">Home</a><a href="shop.html" onclick="closeMob()">Shop</a>
+  <a href="about.html" onclick="closeMob()">About</a><a href="gallery.html" onclick="closeMob()">Gallery</a>
+  <a href="contact.html" onclick="closeMob()">Contact</a>
+</div>
+
+<div class="page-hero">
+  <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1400&q=80" alt="Gallery"/>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <span class="page-tag">Grace Collections</span>
+    <h1 class="page-title">Our <em>Gallery</em></h1>
+  </div>
+</div>
+
+<section id="gallery-wrap">
+  <div class="gallery-filter reveal">
+    <button class="gf-btn active">All</button>
+    <button class="gf-btn">Shoes</button>
+    <button class="gf-btn">Bags</button>
+    <button class="gf-btn">Accessories</button>
+    <button class="gf-btn">Store</button>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="g-item wide reveal" data-src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=900&q=80" alt="Stiletto"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+    <div class="g-item reveal" data-src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80" alt="Bag"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+    <div class="g-item tall reveal" data-src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=600&q=80" alt="Heels"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+    <div class="g-item reveal" data-src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=80" alt="Sandals"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+    <div class="g-item reveal" data-src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=80" alt="Woven Bag"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+    <div class="g-item reveal" data-src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80" alt="Sneakers"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+    <div class="g-item wide reveal" data-src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900&q=80" alt="Fashion"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+    <div class="g-item reveal" data-src="https://images.unsplash.com/photo-1611010344444-5f9e4d86a6d8?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1611010344444-5f9e4d86a6d8?w=600&q=80" alt="Belt"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+    <div class="g-item reveal" data-src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=600&q=80" alt="Crossbody"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+    <div class="g-item tall reveal" data-src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&q=80" alt="Flats"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+    <div class="g-item reveal" data-src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80" alt="Chain Bag"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+    <div class="g-item reveal" data-src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&q=80">
+      <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80" alt="Shopping"/>
+      <div class="g-ov"><span>View</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lb">
+  <div class="lb-close" id="lb-close">✕</div>
+  <div class="lb-prev" id="lb-prev">‹</div>
+  <img id="lb-img" src="" alt=""/>
+  <div class="lb-next" id="lb-next">›</div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo"><span>Grace</span> Collections</div><p class="footer-about">Luxury shoes, bags & accessories · Mutungo, Kampala.</p><div class="footer-social"><a href="#" class="social-btn">IG</a><a href="#" class="social-btn">FB</a><a href="#" class="social-btn">WA</a><a href="#" class="social-btn">TT</a></div></div>
+    <div><div class="footer-col-title">Shop</div><ul class="footer-links"><li><a href="shop.html">Shoes</a></li><li><a href="shop.html">Bags</a></li><li><a href="shop.html">Accessories</a></li></ul></div>
+    <div><div class="footer-col-title">Pages</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><div class="footer-col-title">Visit Us</div><ul class="footer-links"><li><a href="contact.html">Mutungo, Kampala</a></li><li><a href="#">Mon–Sat 9AM–7PM</a></li><li><a href="tel:+256700000000">+256 700 000 000</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2025 Grace Collections · Mutungo, Kampala · Uganda</div><div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+</footer>
+<div id="back-top">↑</div>
+<script src="shared.js"></script>
+<script>
+// Filter buttons (cosmetic)
+document.querySelectorAll('.gf-btn').forEach(b=>{
+  b.addEventListener('click',()=>{document.querySelectorAll('.gf-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active')});
+});
+// Lightbox
+const items=[...document.querySelectorAll('.g-item[data-src]')];
+const lb=document.getElementById('lb');
+const lbImg=document.getElementById('lb-img');
+let cur=0;
+function openLb(i){cur=i;lbImg.src=items[i].dataset.src;lb.classList.add('open');document.body.style.overflow='hidden'}
+function closeLb(){lb.classList.remove('open');document.body.style.overflow=''}
+items.forEach((el,i)=>el.addEventListener('click',()=>openLb(i)));
+document.getElementById('lb-close').addEventListener('click',closeLb);
+document.getElementById('lb-prev').addEventListener('click',()=>openLb((cur-1+items.length)%items.length));
+document.getElementById('lb-next').addEventListener('click',()=>openLb((cur+1)%items.length));
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
+</script>
+</body>
+</html>

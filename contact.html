@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact – Grace Collections</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+#contact-body{display:grid;grid-template-columns:1fr 1.3fr;background:var(--dark);min-height:70vh}
+.contact-info{padding:6rem 4.5rem;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.06)}
+.contact-info .section-title{color:var(--cream);margin-bottom:2.5rem}
+.c-items{display:flex;flex-direction:column;gap:2rem}
+.c-item{display:flex;gap:1.2rem;align-items:flex-start}
+.c-ico{width:42px;height:42px;flex-shrink:0;border:1px solid rgba(184,151,62,.35);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1rem}
+.c-label{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.c-val{color:rgba(250,247,242,.72);font-size:.86rem;line-height:1.6}
+.contact-form-col{padding:6rem 4.5rem;display:flex;flex-direction:column;justify-content:center}
+.contact-form-col .section-title{color:var(--cream);margin-bottom:.8rem}
+.contact-form-col>p{color:var(--muted);font-size:.83rem;margin-bottom:2rem}
+.cform{display:flex;flex-direction:column;gap:1.1rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.fg{display:flex;flex-direction:column;gap:.45rem}
+.flabel{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.finput,.fselect,.ftxt{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--cream);padding:.85rem 1.1rem;font-family:var(--ff-sans);font-size:.83rem;outline:none;transition:border-color .3s;width:100%}
+.finput:focus,.ftxt:focus{border-color:var(--gold)}
+.ftxt{resize:vertical;min-height:110px}
+.fselect{appearance:none}
+.fsubmit{background:var(--gold);color:var(--white);border:none;cursor:pointer;padding:.95rem 2.2rem;font-family:var(--ff-sans);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;align-self:flex-start;transition:opacity .3s}
+.fsubmit:hover{opacity:.85}
+/* MAP */
+#map-section{background:#1e1812;padding:0}
+.map-embed{width:100%;height:380px;border:none;filter:grayscale(30%) contrast(1.1)}
+.map-bar{background:var(--dark);padding:1.5rem 3rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.map-bar-txt{font-size:.8rem;color:rgba(250,247,242,.6);line-height:1.5}
+.map-bar-txt strong{color:var(--cream)}
+.map-dir{margin-left:auto;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(184,151,62,.4);padding:.55rem 1.3rem;transition:.3s;white-space:nowrap}
+.map-dir:hover{background:var(--gold);color:var(--white);border-color:var(--gold)}
+/* HOURS */
+#hours{padding:5rem 3rem;background:var(--cream)}
+.hours-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;max-width:900px;margin:0 auto}
+.hours-table{width:100%}
+.hours-table tr{border-bottom:1px solid rgba(0,0,0,.07)}
+.hours-table td{padding:.9rem 0;font-size:.85rem;color:var(--muted)}
+.hours-table td:first-child{font-weight:500;color:var(--dark)}
+.hours-table td:last-child{text-align:right;color:var(--gold)}
+.hours-note{background:var(--ivory);padding:2rem;border-left:3px solid var(--gold);margin-top:1.5rem}
+.hours-note p{font-size:.82rem;color:var(--muted);line-height:1.75}
+@media(max-width:1024px){#contact-body{grid-template-columns:1fr}.contact-info{border-right:none;border-bottom:1px solid rgba(255,255,255,.06);padding:4rem 2.5rem}.contact-form-col{padding:4rem 2.5rem}.hours-inner{grid-template-columns:1fr;gap:2rem}}
+@media(max-width:600px){.frow{grid-template-columns:1fr}#hours,#contact-body{padding:0}.contact-info,.contact-form-col{padding:3rem 1.5rem}.map-bar{flex-direction:column;align-items:flex-start;padding:1.2rem 1.5rem}.map-dir{margin-left:0}}
+</style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><span>Grace</span> Collections</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="shop.html">Shop</a>
+    <a href="about.html">About</a><a href="gallery.html">Gallery</a><a href="contact.html" class="active">Contact</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Visit Us</a>
+  <div class="hamburger" id="ham"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html" onclick="closeMob()">Home</a><a href="shop.html" onclick="closeMob()">Shop</a>
+  <a href="about.html" onclick="closeMob()">About</a><a href="gallery.html" onclick="closeMob()">Gallery</a>
+  <a href="contact.html" onclick="closeMob()">Contact</a>
+</div>
+
+<div class="page-hero">
+  <img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=1400&q=80" alt="Contact"/>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <span class="page-tag">Get in Touch</span>
+    <h1 class="page-title">Visit <em>Grace</em><br/>Collections</h1>
+  </div>
+</div>
+
+<section id="contact-body">
+  <div class="contact-info reveal-l">
+    <span class="section-tag">Find Us</span>
+    <h2 class="section-title">We're in<br/><em>Mutungo</em></h2>
+    <div class="c-items">
+      <div class="c-item"><div class="c-ico">📍</div><div><div class="c-label">Location</div><div class="c-val">Mutungo, Kampala<br/>Uganda</div></div></div>
+      <div class="c-item"><div class="c-ico">📞</div><div><div class="c-label">Phone / WhatsApp</div><div class="c-val"><a href="tel:+256700000000" style="color:inherit">+256 700 000 000</a></div></div></div>
+      <div class="c-item"><div class="c-ico">📧</div><div><div class="c-label">Email</div><div class="c-val"><a href="mailto:hello@gracecollections.ug" style="color:inherit">hello@gracecollections.ug</a></div></div></div>
+      <div class="c-item"><div class="c-ico">📸</div><div><div class="c-label">Instagram</div><div class="c-val">@gracecollections.ug</div></div></div>
+    </div>
+  </div>
+
+  <div class="contact-form-col reveal-r">
+    <span class="section-tag">Message Us</span>
+    <h2 class="section-title">We'd love to<br/><em>hear from you</em></h2>
+    <p>Looking for a specific item? Planning a special occasion? Reach out — we're happy to help.</p>
+    <div class="cform">
+      <div class="frow">
+        <div class="fg"><label class="flabel">First Name</label><input type="text" class="finput" placeholder="Your name"/></div>
+        <div class="fg"><label class="flabel">Last Name</label><input type="text" class="finput" placeholder="Your surname"/></div>
+      </div>
+      <div class="fg"><label class="flabel">Phone / WhatsApp</label><input type="tel" class="finput" placeholder="+256 ..."/></div>
+      <div class="fg"><label class="flabel">I'm interested in</label>
+        <select class="fselect finput">
+          <option value="">Select...</option>
+          <option>Shoes</option><option>Bags</option><option>Accessories</option><option>General Enquiry</option>
+        </select>
+      </div>
+      <div class="fg"><label class="flabel">Message</label><textarea class="ftxt" placeholder="Tell us what you're looking for..."></textarea></div>
+      <button class="fsubmit" id="fsend">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map-section">
+  <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.757!2d32.624!3d0.316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbbf2e67c4b1d%3A0x6a6ee9f05d6a1e3a!2sMutungo%2C%20Kampala%2C%20Uganda!5e0!3m2!1sen!2sug!4v1700000000000" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <div class="map-bar">
+    <div style="font-size:1.4rem;color:var(--gold)">📍</div>
+    <div class="map-bar-txt"><strong>Grace Collections</strong><br/>Mutungo Hill · Kampala · Uganda</div>
+    <a href="https://maps.google.com/?q=Mutungo+Kampala+Uganda" target="_blank" class="map-dir">Get Directions →</a>
+  </div>
+</section>
+
+<!-- HOURS -->
+<section id="hours">
+  <div style="text-align:center;margin-bottom:3.5rem" class="reveal">
+    <span class="section-tag">Opening Hours</span>
+    <h2 class="section-title">When to <em>Visit</em></h2>
+  </div>
+  <div class="hours-inner">
+    <div class="reveal-l">
+      <table class="hours-table">
+        <tr><td>Monday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr><td>Tuesday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr><td>Wednesday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr><td>Thursday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr><td>Friday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr><td>Saturday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr><td>Sunday</td><td>11:00 AM – 5:00 PM</td></tr>
+      </table>
+    </div>
+    <div class="reveal-r">
+      <div class="hours-note">
+        <span class="section-tag">Good to Know</span>
+        <p>Walk-ins are always welcome. For a personal styling session or to reserve a specific item, WhatsApp us ahead of your visit — we'll make sure everything is ready for you.</p>
+      </div>
+      <a href="https://wa.me/256700000000" target="_blank" class="btn-gold" style="display:inline-block;margin-top:1.5rem">WhatsApp Us</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo"><span>Grace</span> Collections</div><p class="footer-about">Luxury shoes, bags & accessories · Mutungo, Kampala.</p><div class="footer-social"><a href="#" class="social-btn">IG</a><a href="#" class="social-btn">FB</a><a href="#" class="social-btn">WA</a><a href="#" class="social-btn">TT</a></div></div>
+    <div><div class="footer-col-title">Shop</div><ul class="footer-links"><li><a href="shop.html">Shoes</a></li><li><a href="shop.html">Bags</a></li><li><a href="shop.html">Accessories</a></li></ul></div>
+    <div><div class="footer-col-title">Pages</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="gallery.html">Gallery</a></li></ul></div>
+    <div><div class="footer-col-title">Visit Us</div><ul class="footer-links"><li><a href="#">Mutungo, Kampala</a></li><li><a href="#">Mon–Sat 9AM–7PM</a></li><li><a href="tel:+256700000000">+256 700 000 000</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2025 Grace Collections · Mutungo, Kampala · Uganda</div><div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+</footer>
+<div id="back-top">↑</div>
+<script src="shared.js"></script>
+<script>
+document.getElementById('fsend').addEventListener('click',function(){
+  this.textContent='Sent ✓';this.style.background='#3d8b5e';
+  setTimeout(()=>{this.textContent='Send Message →';this.style.background=''},3000);
+});
+</script>
+</body>
+</html>
