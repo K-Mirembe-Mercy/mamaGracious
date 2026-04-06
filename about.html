@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>About – Grace Collections</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ABOUT STORY */
+#story{display:grid;grid-template-columns:1fr 1fr;align-items:center;background:var(--dark)}
+.story-img{position:relative;min-height:600px;overflow:hidden}
+.story-img img{width:100%;height:100%;object-fit:cover}
+.story-content{padding:6rem 5rem;display:flex;flex-direction:column;justify-content:center}
+.story-content .section-title{color:var(--cream);margin-bottom:1.5rem}
+.story-content p{color:rgba(250,247,242,.62);font-size:.88rem;line-height:1.95;margin-bottom:1.2rem;max-width:440px}
+/* OWNER SECTION */
+#owner{display:grid;grid-template-columns:1fr 1fr;background:var(--ivory)}
+.owner-photo-col{position:relative;min-height:640px;overflow:hidden;background:var(--cream)}
+/* OWNER PHOTO — replace placeholder div with <img> when ready */
+.owner-ph{width:100%;height:100%;min-height:640px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#f0ead8,#c9b99a);gap:2rem;position:relative}
+.owner-ph::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b8973e' fill-opacity='0.07'%3E%3Ccircle cx='20' cy='20' r='2'/%3E%3C/g%3E%3C/svg%3E")}
+.owner-circle{width:240px;height:240px;border-radius:50%;border:3px dashed var(--gold);background:rgba(255,255,255,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;position:relative;z-index:1}
+.owner-circle svg{width:110px;height:110px;opacity:.35}
+.owner-upload-txt{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);text-align:center}
+.owner-frame{position:absolute;bottom:0;left:0;right:0;background:var(--dark);padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between}
+.owner-frame-name{font-family:var(--ff-serif);font-size:1.7rem;color:var(--cream);font-weight:300}
+.owner-frame-role{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.owner-text-col{padding:6rem 5rem;display:flex;flex-direction:column;justify-content:center}
+.owner-text-col p{color:var(--muted);font-size:.88rem;line-height:1.95;max-width:430px;margin-top:1.2rem}
+.owner-sig{font-family:var(--ff-serif);font-size:2.4rem;font-style:italic;color:var(--gold);margin-top:2.2rem}
+/* VALUES */
+#values{padding:6rem 3rem;background:var(--cream);text-align:center}
+.values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;max-width:1100px;margin:3.5rem auto 0}
+.value-card{padding:2.5rem 2rem;background:var(--ivory);border-bottom:2px solid var(--gold)}
+.value-icon{font-size:1.8rem;margin-bottom:1.2rem}
+.value-title{font-family:var(--ff-serif);font-size:1.2rem;color:var(--dark);margin-bottom:.7rem}
+.value-text{font-size:.8rem;color:var(--muted);line-height:1.75}
+/* TIMELINE */
+#timeline{padding:6rem 3rem;background:var(--dark)}
+.timeline-inner{max-width:700px;margin:3rem auto 0;position:relative}
+.timeline-inner::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(184,151,62,.3);transform:translateX(-50%)}
+.tl-item{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-bottom:3.5rem;position:relative}
+.tl-item:nth-child(even) .tl-left{order:2}
+.tl-item:nth-child(even) .tl-right{order:1;text-align:right}
+.tl-year{font-family:var(--ff-serif);font-size:2.2rem;color:var(--gold);font-weight:300}
+.tl-title{font-family:var(--ff-serif);font-size:1.15rem;color:var(--cream);margin-bottom:.5rem}
+.tl-text{font-size:.8rem;color:var(--muted);line-height:1.7}
+.tl-dot{position:absolute;left:50%;top:.4rem;width:10px;height:10px;border-radius:50%;background:var(--gold);transform:translateX(-50%)}
+@media(max-width:1024px){#story,#owner{grid-template-columns:1fr}.story-img,.owner-photo-col{min-height:400px}.story-content,.owner-text-col{padding:4rem 2.5rem}.owner-frame-name{font-size:1.4rem}.values-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){#values,#timeline{padding:4rem 1.5rem}.values-grid{grid-template-columns:1fr}.timeline-inner::before{left:20px}.tl-item{grid-template-columns:1fr;gap:0}.tl-item:nth-child(even) .tl-left,.tl-item:nth-child(even) .tl-right{order:unset;text-align:left}.tl-dot{left:20px}}
+</style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><span>Grace</span> Collections</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="shop.html">Shop</a>
+    <a href="about.html" class="active">About</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Visit Us</a>
+  <div class="hamburger" id="ham"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html" onclick="closeMob()">Home</a><a href="shop.html" onclick="closeMob()">Shop</a>
+  <a href="about.html" onclick="closeMob()">About</a><a href="gallery.html" onclick="closeMob()">Gallery</a>
+  <a href="contact.html" onclick="closeMob()">Contact</a>
+</div>
+
+<div class="page-hero">
+  <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=80" alt="About Grace Collections"/>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <span class="page-tag">Our Story</span>
+    <h1 class="page-title">About <em>Grace</em><br/>Collections</h1>
+  </div>
+</div>
+
+<!-- STORY -->
+<section id="story">
+  <div class="story-img reveal-l">
+    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=80" alt="Fashion Shopping"/>
+  </div>
+  <div class="story-content reveal-r">
+    <span class="section-tag">Who We Are</span>
+    <h2 class="section-title">Born in <em>Kampala</em>,<br/>Built with Passion</h2>
+    <p>Grace Collections is Kampala's premier destination for luxury footwear, bags, and accessories. Nestled in the vibrant neighbourhood of Mutungo, we curate only the finest pieces for women who demand both style and quality.</p>
+    <p>Every item in our store is handpicked — never mass-ordered — ensuring our clients always find something rare, beautiful, and uniquely theirs.</p>
+    <a href="shop.html" class="btn-gold" style="margin-top:2rem;align-self:flex-start">Shop the Collection</a>
+  </div>
+</section>
+
+<!-- OWNER -->
+<section id="owner">
+  <div class="owner-text-col reveal-l">
+    <span class="section-tag">Meet the Founder</span>
+    <h2 class="section-title">The Woman<br/>Behind <em>Grace</em></h2>
+    <p>Grace is a Kampala-born fashion entrepreneur with an eye for beauty that cannot be taught. After years of sourcing the finest pieces from across the continent and beyond, she opened Grace Collections in Mutungo to bring world-class style home to Uganda.</p>
+    <p>Her curation philosophy is simple: if it doesn't make you feel extraordinary, it doesn't belong in the store.</p>
+    <div class="owner-sig">Grace ✦</div>
+    <a href="contact.html" class="btn-outline" style="margin-top:2.2rem;align-self:flex-start">Visit Us</a>
+  </div>
+  <div class="owner-photo-col reveal-r">
+    <!--== OWNER PHOTO: Replace this div with <img src="grace-photo.jpg" alt="Grace" style="width:100%;height:100%;object-fit:cover;object-position:top"> ==-->
+    <div class="owner-ph">
+      <div class="owner-circle">
+        <svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="35" r="22" fill="var(--mid)"/><ellipse cx="50" cy="88" rx="38" ry="22" fill="var(--mid)"/></svg>
+        <div class="owner-upload-txt">Add Photo Here</div>
+      </div>
+    </div>
+    <!--== END OWNER PHOTO ==-->
+    <div class="owner-frame">
+      <div><div class="owner-frame-name">Grace</div><div class="owner-frame-role">Founder & Curator</div></div>
+      <div style="color:var(--gold);font-size:1.3rem">✦</div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section id="values">
+  <div class="reveal"><span class="section-tag">Our Promise</span><h2 class="section-title">The Grace <em>Standard</em></h2></div>
+  <div class="values-grid">
+    <div class="value-card reveal"><div class="value-icon">✦</div><div class="value-title">Handpicked Quality</div><div class="value-text">Every piece personally selected for craftsmanship and beauty.</div></div>
+    <div class="value-card reveal"><div class="value-icon">⬡</div><div class="value-title">100% Authentic</div><div class="value-text">Genuine premium products. No imitations, ever.</div></div>
+    <div class="value-card reveal"><div class="value-icon">◈</div><div class="value-title">Personal Styling</div><div class="value-text">We help you find pieces that match your personality.</div></div>
+    <div class="value-card reveal"><div class="value-icon">❋</div><div class="value-title">Kampala's Best</div><div class="value-text">Your premier boutique in the heart of Mutungo.</div></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div style="text-align:center" class="reveal">
+    <span class="section-tag" style="display:inline-block">Our Journey</span>
+    <h2 class="section-title" style="color:var(--cream)">The <em>Grace</em> Story</h2>
+  </div>
+  <div class="timeline-inner">
+    <div class="tl-item">
+      <div class="tl-left reveal-l"><div class="tl-year">2018</div></div>
+      <div class="tl-right reveal-r"><div class="tl-title">The Vision</div><div class="tl-text">Grace begins sourcing premium shoes and bags from across Africa.</div></div>
+      <div class="tl-dot"></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left reveal-l"><div class="tl-title">The First Store</div><div class="tl-text">Grace Collections opens its doors in Mutungo, Kampala to instant acclaim.</div></div>
+      <div class="tl-right reveal-r"><div class="tl-year">2020</div></div>
+      <div class="tl-dot"></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left reveal-l"><div class="tl-year">2022</div></div>
+      <div class="tl-right reveal-r"><div class="tl-title">500+ Styles</div><div class="tl-text">The collection grows to over 500 curated styles across all categories.</div></div>
+      <div class="tl-dot"></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left reveal-l"><div class="tl-title">3,000+ Clients</div><div class="tl-text">Serving thousands of happy women across Kampala and Uganda.</div></div>
+      <div class="tl-right reveal-r"><div class="tl-year">2025</div></div>
+      <div class="tl-dot"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo"><span>Grace</span> Collections</div><p class="footer-about">Luxury shoes, bags & accessories · Mutungo, Kampala.</p><div class="footer-social"><a href="#" class="social-btn">IG</a><a href="#" class="social-btn">FB</a><a href="#" class="social-btn">WA</a><a href="#" class="social-btn">TT</a></div></div>
+    <div><div class="footer-col-title">Shop</div><ul class="footer-links"><li><a href="shop.html">Shoes</a></li><li><a href="shop.html">Bags</a></li><li><a href="shop.html">Accessories</a></li></ul></div>
+    <div><div class="footer-col-title">Pages</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><div class="footer-col-title">Visit Us</div><ul class="footer-links"><li><a href="contact.html">Mutungo, Kampala</a></li><li><a href="#">Mon–Sat 9AM–7PM</a></li><li><a href="tel:+256700000000">+256 700 000 000</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2025 Grace Collections · Mutungo, Kampala · Uganda</div><div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+</footer>
+<div id="back-top">↑</div>
+<script src="shared.js"></script>
+</body>
+</html>

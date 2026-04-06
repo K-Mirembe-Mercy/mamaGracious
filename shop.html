@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Shop – Grace Collections</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.shop-layout{display:grid;grid-template-columns:220px 1fr;gap:3rem;max-width:1200px;margin:0 auto;padding:5rem 3rem}
+.filter-col{position:sticky;top:120px;align-self:start}
+.filter-title{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.filter-list{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:2.5rem}
+.filter-list li a{font-size:.82rem;color:var(--muted);transition:color .3s;display:flex;justify-content:space-between;align-items:center}
+.filter-list li a:hover,.filter-list li a.active{color:var(--dark)}
+.filter-list li a.active{font-weight:500}
+.filter-count{font-size:.65rem;color:var(--sand)}
+.shop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.shop-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem}
+.shop-count{font-size:.75rem;color:var(--muted);letter-spacing:.08em}
+.sort-select{font-family:var(--ff-sans);font-size:.72rem;border:1px solid rgba(0,0,0,.1);padding:.4rem .9rem;background:var(--ivory);color:var(--text);outline:none}
+/* filter tabs mobile */
+.filter-tabs{display:none;gap:.6rem;overflow-x:auto;padding-bottom:.5rem;margin-bottom:1.5rem}
+.filter-tab{white-space:nowrap;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;padding:.5rem 1.2rem;border:1px solid rgba(0,0,0,.12);color:var(--muted);cursor:pointer;transition:.3s}
+.filter-tab.active{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+@media(max-width:900px){.shop-layout{grid-template-columns:1fr;padding:4rem 1.5rem}.filter-col{display:none}.filter-tabs{display:flex}}
+@media(max-width:600px){.shop-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><span>Grace</span> Collections</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="shop.html" class="active">Shop</a>
+    <a href="about.html">About</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Visit Us</a>
+  <div class="hamburger" id="ham"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html" onclick="closeMob()">Home</a><a href="shop.html" onclick="closeMob()">Shop</a>
+  <a href="about.html" onclick="closeMob()">About</a><a href="gallery.html" onclick="closeMob()">Gallery</a>
+  <a href="contact.html" onclick="closeMob()">Contact</a>
+</div>
+
+<div class="page-hero" style="margin-top:0;padding-top:0">
+  <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=80" alt="Shop Hero"/>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <span class="page-tag">Grace Collections</span>
+    <h1 class="page-title">Our <em>Shop</em></h1>
+  </div>
+</div>
+
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item">Shoes ✦</span><span class="marquee-item">Bags ✦</span><span class="marquee-item">Accessories ✦</span><span class="marquee-item">Belts ✦</span><span class="marquee-item">New Arrivals ✦</span>
+    <span class="marquee-item">Shoes ✦</span><span class="marquee-item">Bags ✦</span><span class="marquee-item">Accessories ✦</span><span class="marquee-item">Belts ✦</span><span class="marquee-item">New Arrivals ✦</span>
+  </div>
+</div>
+
+<!-- mobile filter tabs -->
+<div style="padding:1.5rem 1.5rem 0">
+  <div class="filter-tabs">
+    <div class="filter-tab active">All</div>
+    <div class="filter-tab">Shoes</div>
+    <div class="filter-tab">Bags</div>
+    <div class="filter-tab">Accessories</div>
+    <div class="filter-tab">New Arrivals</div>
+  </div>
+</div>
+
+<div class="shop-layout">
+  <!-- Sidebar -->
+  <aside class="filter-col">
+    <div class="filter-title">Categories</div>
+    <ul class="filter-list">
+      <li><a href="#" class="active">All Products <span class="filter-count">24</span></a></li>
+      <li><a href="#">Heels <span class="filter-count">8</span></a></li>
+      <li><a href="#">Flats & Sandals <span class="filter-count">5</span></a></li>
+      <li><a href="#">Sneakers <span class="filter-count">4</span></a></li>
+      <li><a href="#">Handbags <span class="filter-count">4</span></a></li>
+      <li><a href="#">Belts <span class="filter-count">2</span></a></li>
+      <li><a href="#">Wallets <span class="filter-count">1</span></a></li>
+    </ul>
+    <div class="filter-title">Price Range</div>
+    <ul class="filter-list">
+      <li><a href="#">Under UGX 100K</a></li>
+      <li><a href="#">UGX 100K – 200K</a></li>
+      <li><a href="#">UGX 200K – 350K</a></li>
+      <li><a href="#">Above UGX 350K</a></li>
+    </ul>
+    <div class="filter-title">Tags</div>
+    <ul class="filter-list">
+      <li><a href="#">New Arrivals</a></li>
+      <li><a href="#">Bestsellers</a></li>
+      <li><a href="#">Limited Edition</a></li>
+    </ul>
+  </aside>
+
+  <!-- Products -->
+  <div>
+    <div class="shop-header reveal">
+      <span class="shop-count">Showing 12 of 24 products</span>
+      <select class="sort-select"><option>Sort: Featured</option><option>Price: Low–High</option><option>Price: High–Low</option><option>Newest First</option></select>
+    </div>
+    <div class="shop-grid">
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&q=80" alt="Velvet Stiletto"/><span class="product-badge">New</span></div><div class="product-info"><div class="product-name">Velvet Stiletto</div><div class="product-sub">Women's Heels</div><div class="product-price">UGX 185,000</div></div></div>
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80" alt="Tote Luxe"/><span class="product-badge">Bestseller</span></div><div class="product-info"><div class="product-name">Tote Luxe</div><div class="product-sub">Leather Handbag</div><div class="product-price">UGX 320,000</div></div></div>
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80" alt="Cloud Runner"/></div><div class="product-info"><div class="product-name">Cloud Runner</div><div class="product-sub">Sneakers</div><div class="product-price">UGX 210,000</div></div></div>
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=600&q=80" alt="Mini Crossbody"/><span class="product-badge">Limited</span></div><div class="product-info"><div class="product-name">Mini Crossbody</div><div class="product-sub">Evening Bag</div><div class="product-price">UGX 145,000</div></div></div>
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=600&q=80" alt="Pearl Mule"/></div><div class="product-info"><div class="product-name">Pearl Mule</div><div class="product-sub">Slip-On Heels</div><div class="product-price">UGX 165,000</div></div></div>
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=80" alt="Woven Tote"/></div><div class="product-info"><div class="product-name">Woven Tote</div><div class="product-sub">Summer Bag</div><div class="product-price">UGX 98,000</div></div></div>
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=80" alt="Gold Ankle Strap"/><span class="product-badge">New</span></div><div class="product-info"><div class="product-name">Gold Ankle Strap</div><div class="product-sub">Sandals</div><div class="product-price">UGX 135,000</div></div></div>
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1611010344444-5f9e4d86a6d8?w=600&q=80" alt="Braided Belt"/></div><div class="product-info"><div class="product-name">Braided Belt</div><div class="product-sub">Leather Accessory</div><div class="product-price">UGX 65,000</div></div></div>
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=80" alt="Classic Pump"/></div><div class="product-info"><div class="product-name">Classic Pump</div><div class="product-sub">Block Heel</div><div class="product-price">UGX 195,000</div></div></div>
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&q=80" alt="Nude Flats"/></div><div class="product-info"><div class="product-name">Nude Flats</div><div class="product-sub">Ballet Flats</div><div class="product-price">UGX 120,000</div></div></div>
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80" alt="Chain Bag"/><span class="product-badge">Limited</span></div><div class="product-info"><div class="product-name">Chain Bag</div><div class="product-sub">Evening Clutch</div><div class="product-price">UGX 178,000</div></div></div>
+      <div class="product-card reveal"><div class="product-img"><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80" alt="Sport Runner"/></div><div class="product-info"><div class="product-name">Sport Runner</div><div class="product-sub">Athletic Shoes</div><div class="product-price">UGX 230,000</div></div></div>
+    </div>
+    <div style="text-align:center;margin-top:3.5rem" class="reveal">
+      <a href="contact.html" class="btn-dark">View More In Store →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo"><span>Grace</span> Collections</div><p class="footer-about">Luxury shoes, bags & accessories · Mutungo, Kampala.</p><div class="footer-social"><a href="#" class="social-btn">IG</a><a href="#" class="social-btn">FB</a><a href="#" class="social-btn">WA</a><a href="#" class="social-btn">TT</a></div></div>
+    <div><div class="footer-col-title">Shop</div><ul class="footer-links"><li><a href="shop.html">Shoes</a></li><li><a href="shop.html">Bags</a></li><li><a href="shop.html">Accessories</a></li></ul></div>
+    <div><div class="footer-col-title">Pages</div><ul class="footer-links"><li><a href="about.html">About</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><div class="footer-col-title">Visit Us</div><ul class="footer-links"><li><a href="contact.html">Mutungo, Kampala</a></li><li><a href="#">Mon–Sat 9AM–7PM</a></li><li><a href="tel:+256700000000">+256 700 000 000</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2025 Grace Collections · Mutungo, Kampala · Uganda</div><div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+</footer>
+<div id="back-top">↑</div>
+<script src="shared.js"></script>
+<script>
+document.querySelectorAll('.filter-tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
