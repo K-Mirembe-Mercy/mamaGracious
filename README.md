@@ -28,5 +28,4 @@ mama-gracious-website/
 │── styles.css       # Styling file
 │── images/          # Product images
 │── script.js        # JavaScript functionality
-│── README.md        # Project documentation
-Screenshot_20260412_170002_Chrome.jpg
+│── README.md        
