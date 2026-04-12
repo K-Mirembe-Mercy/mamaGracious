@@ -13,6 +13,7 @@ This project is a simple, responsive website built to showcase and promote Mama 
 📱 Responsive design (works on phones & computers)
 📞 Contact section for orders and inquiries
 🖼️ Attractive product images
+![Screenshot_20260412_165858_Chrome](https://github.com/user-attachments/assets/3d9ce65b-feeb-4255-864c-b9e880129a54)
 
 🛠️ Technologies Used
 
