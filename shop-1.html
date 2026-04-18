@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Shop – Grace Collections</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── SHOP LAYOUT ── */
+.shop-wrap{display:grid;grid-template-columns:230px 1fr;gap:3rem;max-width:1240px;margin:0 auto;padding:5rem 3rem 6rem}
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:100px;align-self:start}
+.sb-section{margin-bottom:2.5rem}
+.sb-title{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.sb-title::after{content:'−';font-size:.9rem;color:var(--sand)}
+.sb-title.collapsed::after{content:'+'}
+.sb-body{overflow:hidden;transition:max-height .35s ease,opacity .35s ease;max-height:500px;opacity:1}
+.sb-body.collapsed{max-height:0;opacity:0}
+.cat-btn{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;padding:.5rem 0;cursor:pointer;font-family:var(--ff-sans);font-size:.82rem;color:var(--muted);transition:color .25s;border-bottom:1px solid rgba(0,0,0,.05)}
+.cat-btn:hover{color:var(--dark)}
+.cat-btn.active{color:var(--gold);font-weight:500}
+.cat-count{font-size:.62rem;color:var(--sand)}
+.cat-btn.active .cat-count{color:var(--gold)}
+/* price range */
+.price-slider{width:100%;margin:.5rem 0 .8rem;accent-color:var(--gold)}
+.price-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted)}
+/* tags */
+.tag-pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.tag-pill{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;border:1px solid rgba(0,0,0,.12);padding:.35rem .8rem;cursor:pointer;color:var(--muted);transition:.25s;background:none}
+.tag-pill:hover,.tag-pill.active{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+/* clear */
+.clear-btn{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;padding:.3rem 0;text-decoration:underline;margin-top:.5rem}
+.clear-btn:hover{color:var(--gold)}
+
+/* ── MAIN AREA ── */
+.shop-main{}
+.shop-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;gap:1rem;flex-wrap:wrap}
+.count-txt{font-size:.72rem;color:var(--muted);letter-spacing:.06em}
+.count-txt strong{color:var(--dark)}
+.topbar-right{display:flex;align-items:center;gap:1rem}
+.sort-sel{font-family:var(--ff-sans);font-size:.72rem;border:1px solid rgba(0,0,0,.12);padding:.45rem 1rem .45rem .8rem;background:var(--ivory);color:var(--text);outline:none;cursor:pointer}
+.view-toggle{display:flex;gap:.4rem}
+.vt-btn{width:34px;height:34px;border:1px solid rgba(0,0,0,.12);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.9rem;transition:.25s}
+.vt-btn.active{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+
+/* ── MOBILE FILTER BAR ── */
+.mob-filter-bar{display:none;overflow-x:auto;gap:.5rem;padding:1.2rem 1.5rem .2rem;scrollbar-width:none}
+.mob-filter-bar::-webkit-scrollbar{display:none}
+.mf-pill{white-space:nowrap;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;padding:.5rem 1.2rem;border:1px solid rgba(0,0,0,.12);color:var(--muted);cursor:pointer;background:none;transition:.25s;flex-shrink:0}
+.mf-pill.active{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+
+/* ── GRID / LIST ── */
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;transition:opacity .3s}
+.prod-grid.list-view{grid-template-columns:1fr}
+.prod-grid.list-view .product-card{display:grid;grid-template-columns:220px 1fr;gap:1.5rem;align-items:center}
+.prod-grid.list-view .product-img{aspect-ratio:1}
+.prod-grid.list-view .product-info{padding:.5rem 0}
+.prod-grid.list-view .product-name{font-size:1.4rem}
+
+/* product card enhancements */
+.product-card{cursor:pointer}
+.product-img{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--cream)}
+.product-img img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease}
+.product-card:hover .product-img img{transform:scale(1.07)}
+.product-badge{position:absolute;top:.8rem;left:.8rem;background:var(--dark);color:var(--cream);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;padding:.28rem .6rem;z-index:2}
+.badge-sale{background:var(--gold)}
+.card-actions{position:absolute;bottom:0;left:0;right:0;display:flex;background:rgba(26,20,16,.85);transform:translateY(100%);transition:transform .35s ease}
+.product-card:hover .card-actions{transform:none}
+.ca-btn{flex:1;background:none;border:none;padding:.75rem;font-family:var(--ff-sans);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cream);cursor:pointer;transition:background .25s;border-right:1px solid rgba(255,255,255,.1)}
+.ca-btn:last-child{border-right:none}
+.ca-btn:hover{background:var(--gold)}
+.wish-icon{position:absolute;top:.8rem;right:.8rem;width:32px;height:32px;background:var(--white);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;z-index:2;opacity:0;transition:opacity .3s}
+.product-card:hover .wish-icon{opacity:1}
+.wish-icon.liked{opacity:1;color:var(--gold)}
+.product-info{padding:1rem 0 .4rem}
+.product-name{font-family:var(--ff-serif);font-size:1.08rem;color:var(--dark)}
+.product-sub{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+.product-price{font-size:.83rem;color:var(--gold);margin-top:.55rem;display:flex;align-items:center;gap:.6rem}
+.price-old{color:var(--muted);text-decoration:line-through;font-size:.75rem}
+
+/* hidden card */
+.product-card.hidden{display:none}
+.product-card.fade-in{animation:fadeUp .35s ease forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* empty state */
+.empty-state{text-align:center;padding:4rem 2rem;grid-column:1/-1;display:none}
+.empty-state.show{display:block}
+.empty-state h3{font-family:var(--ff-serif);font-size:1.8rem;color:var(--mid);margin-bottom:.8rem}
+.empty-state p{color:var(--muted);font-size:.85rem}
+
+/* load more */
+.load-more-wrap{text-align:center;margin-top:3rem}
+
+/* ── QUICK VIEW MODAL ── */
+.qv-overlay{display:none;position:fixed;inset:0;background:rgba(26,20,16,.75);z-index:900;align-items:center;justify-content:center;padding:2rem}
+.qv-overlay.open{display:flex}
+.qv-modal{background:var(--ivory);max-width:820px;width:100%;display:grid;grid-template-columns:1fr 1fr;position:relative;max-height:90vh;overflow:auto}
+.qv-close{position:absolute;top:1.2rem;right:1.5rem;font-size:1.6rem;background:none;border:none;cursor:pointer;color:var(--mid);z-index:2}
+.qv-img{aspect-ratio:1;overflow:hidden}
+.qv-img img{width:100%;height:100%;object-fit:cover}
+.qv-info{padding:3rem 2.5rem;display:flex;flex-direction:column;justify-content:center}
+.qv-tag{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem}
+.qv-name{font-family:var(--ff-serif);font-size:2rem;color:var(--dark);font-weight:300;line-height:1.15;margin-bottom:.5rem}
+.qv-price{font-size:1rem;color:var(--gold);margin-bottom:1.5rem}
+.qv-desc{font-size:.83rem;color:var(--muted);line-height:1.8;margin-bottom:2rem}
+.qv-sizes{display:flex;gap:.6rem;margin-bottom:1.8rem;flex-wrap:wrap}
+.sz-btn{width:40px;height:40px;border:1px solid rgba(0,0,0,.15);background:none;font-family:var(--ff-sans);font-size:.75rem;cursor:pointer;transition:.25s}
+.sz-btn:hover,.sz-btn.active{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+.qv-actions{display:flex;gap:.8rem;flex-wrap:wrap}
+
+/* ── CART TOAST ── */
+.cart-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:var(--cream);padding:.8rem 1.8rem;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;z-index:9999;transition:transform .4s ease,opacity .4s;opacity:0}
+.cart-toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ── CART BADGE ── */
+.cart-badge{position:fixed;top:1.2rem;right:5.5rem;width:38px;height:38px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:.7rem;font-weight:500;z-index:801;cursor:pointer;transition:transform .3s}
+.cart-badge:hover{transform:scale(1.1)}
+.cart-count{font-size:.65rem}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .shop-wrap{grid-template-columns:1fr;padding:3.5rem 1.5rem}
+  .sidebar{display:none}
+  .mob-filter-bar{display:flex}
+  .prod-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+  .prod-grid{grid-template-columns:repeat(2,1fr);gap:.8rem}
+  .qv-modal{grid-template-columns:1fr}
+  .qv-img{display:none}
+  .qv-info{padding:2.5rem 1.8rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><span>Grace</span> Collections</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="shop.html" class="active">Shop</a>
+    <a href="about.html">About</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Visit Us</a>
+  <div class="hamburger" id="ham"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html" onclick="closeMob()">Home</a><a href="shop.html" onclick="closeMob()">Shop</a>
+  <a href="about.html" onclick="closeMob()">About</a><a href="gallery.html" onclick="closeMob()">Gallery</a>
+  <a href="contact.html" onclick="closeMob()">Contact</a>
+</div>
+
+<!-- CART BADGE -->
+<div class="cart-badge" id="cartBadge" title="Enquiry list"><span class="cart-count" id="cartCount">0</span></div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=80" alt="Shop"/>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <span class="page-tag">Grace Collections</span>
+    <h1 class="page-title">Our <em>Shop</em></h1>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item">Shoes ✦</span><span class="marquee-item">Bags ✦</span><span class="marquee-item">Accessories ✦</span><span class="marquee-item">Belts ✦</span><span class="marquee-item">New Arrivals ✦</span>
+    <span class="marquee-item">Shoes ✦</span><span class="marquee-item">Bags ✦</span><span class="marquee-item">Accessories ✦</span><span class="marquee-item">Belts ✦</span><span class="marquee-item">New Arrivals ✦</span>
+  </div>
+</div>
+
+<!-- MOBILE FILTER BAR -->
+<div class="mob-filter-bar" id="mobFilterBar">
+  <button class="mf-pill active" data-cat="all">All</button>
+  <button class="mf-pill" data-cat="shoes">Shoes</button>
+  <button class="mf-pill" data-cat="bags">Bags</button>
+  <button class="mf-pill" data-cat="accessories">Accessories</button>
+  <button class="mf-pill" data-cat="new">New Arrivals</button>
+  <button class="mf-pill" data-cat="bestseller">Bestsellers</button>
+</div>
+
+<!-- MAIN SHOP LAYOUT -->
+<div class="shop-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="sb-section">
+      <div class="sb-title" data-target="sb-cats">Categories</div>
+      <div class="sb-body" id="sb-cats">
+        <button class="cat-btn active" data-cat="all">All Products <span class="cat-count" id="cnt-all">16</span></button>
+        <button class="cat-btn" data-cat="shoes">Shoes <span class="cat-count" id="cnt-shoes">7</span></button>
+        <button class="cat-btn" data-cat="bags">Bags <span class="cat-count" id="cnt-bags">5</span></button>
+        <button class="cat-btn" data-cat="accessories">Accessories <span class="cat-count" id="cnt-accessories">4</span></button>
+      </div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-title" data-target="sb-price">Price Range</div>
+      <div class="sb-body" id="sb-price">
+        <input type="range" class="price-slider" id="priceSlider" min="50000" max="400000" value="400000" step="10000"/>
+        <div class="price-labels"><span>UGX 50K</span><span id="priceLabel">UGX 400K</span></div>
+      </div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-title" data-target="sb-tags">Tags</div>
+      <div class="sb-body" id="sb-tags">
+        <div class="tag-pills">
+          <button class="tag-pill" data-tag="new">New</button>
+          <button class="tag-pill" data-tag="bestseller">Bestseller</button>
+          <button class="tag-pill" data-tag="limited">Limited</button>
+          <button class="tag-pill" data-tag="sale">Sale</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="clear-btn" id="clearAll">Clear all filters</button>
+  </aside>
+
+  <!-- PRODUCTS MAIN -->
+  <div class="shop-main">
+    <div class="shop-topbar">
+      <span class="count-txt"><strong id="visibleCount">16</strong> products</span>
+      <div class="topbar-right">
+        <select class="sort-sel" id="sortSel">
+          <option value="featured">Sort: Featured</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="newest">Newest First</option>
+          <option value="name-asc">Name: A → Z</option>
+        </select>
+        <div class="view-toggle">
+          <button class="vt-btn active" id="gridView" title="Grid">⊞</button>
+          <button class="vt-btn" id="listView" title="List">☰</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-grid" id="prodGrid">
+      <!-- Products injected by JS -->
+    </div>
+    <div class="empty-state" id="emptyState">
+      <h3>No items found</h3>
+      <p>Try adjusting your filters or browse all products.</p>
+    </div>
+
+    <div class="load-more-wrap" id="loadMoreWrap">
+      <button class="btn-dark" id="loadMoreBtn">Load More</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK VIEW MODAL -->
+<div class="qv-overlay" id="qvOverlay">
+  <div class="qv-modal" id="qvModal">
+    <button class="qv-close" id="qvClose">✕</button>
+    <div class="qv-img"><img id="qvImg" src="" alt=""/></div>
+    <div class="qv-info">
+      <span class="qv-tag" id="qvCat"></span>
+      <div class="qv-name" id="qvName"></div>
+      <div class="qv-price" id="qvPrice"></div>
+      <p class="qv-desc" id="qvDesc"></p>
+      <div class="qv-sizes" id="qvSizes"></div>
+      <div class="qv-actions">
+        <button class="btn-gold" id="qvEnquire">Enquire on WhatsApp</button>
+        <button class="btn-outline" id="qvWish">♡ Wishlist</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART TOAST -->
+<div class="cart-toast" id="cartToast"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo"><span>Grace</span> Collections</div><p class="footer-about">Luxury shoes, bags & accessories · Mutungo, Kampala.</p><div class="footer-social"><a href="#" class="social-btn">IG</a><a href="#" class="social-btn">FB</a><a href="#" class="social-btn">WA</a><a href="#" class="social-btn">TT</a></div></div>
+    <div><div class="footer-col-title">Shop</div><ul class="footer-links"><li><a href="shop.html">Shoes</a></li><li><a href="shop.html">Bags</a></li><li><a href="shop.html">Accessories</a></li></ul></div>
+    <div><div class="footer-col-title">Pages</div><ul class="footer-links"><li><a href="about.html">About</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><div class="footer-col-title">Visit Us</div><ul class="footer-links"><li><a href="contact.html">Mutungo, Kampala</a></li><li><a href="#">Mon–Sat 9AM–7PM</a></li><li><a href="tel:+256700000000">+256 700 000 000</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2025 Grace Collections · Mutungo, Kampala · Uganda</div><div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+</footer>
+<div id="back-top">↑</div>
+<script src="shared.js"></script>
+<script>
+// ═══════════════════════════════════════════
+//  PRODUCT DATABASE
+// ═══════════════════════════════════════════
+const PRODUCTS = [
+  { id:1, name:'Velvet Stiletto',   cat:'shoes',       sub:'Women\'s Heels',       price:185000, tag:'new',        img:'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&q=80', desc:'Sleek velvet upper with a pointed toe and 10cm stiletto heel. A timeless evening staple.', sizes:['36','37','38','39','40','41'], date:2025 },
+  { id:2, name:'Tote Luxe',         cat:'bags',        sub:'Leather Handbag',       price:320000, tag:'bestseller', img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80', desc:'Full-grain leather tote with gold-tone hardware and suede interior. Fits your laptop + essentials.', sizes:[], date:2024 },
+  { id:3, name:'Cloud Runner',      cat:'shoes',       sub:'Sneakers',              price:210000, tag:'',           img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80', desc:'Lightweight memory-foam sole with breathable mesh upper. All-day comfort.', sizes:['36','37','38','39','40','41','42'], date:2025 },
+  { id:4, name:'Mini Crossbody',    cat:'bags',        sub:'Evening Bag',           price:145000, tag:'limited',    img:'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=600&q=80', desc:'Petite structured crossbody with detachable chain strap. Perfect for evenings out.', sizes:[], date:2025 },
+  { id:5, name:'Pearl Mule',        cat:'shoes',       sub:'Slip-On Heels',         price:165000, tag:'',           img:'https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=600&q=80', desc:'Open-toe mule with pearl-studded toe band and block heel. Elegant and comfortable.', sizes:['36','37','38','39','40'], date:2024 },
+  { id:6, name:'Woven Raffia Tote', cat:'bags',        sub:'Summer Bag',            price:98000,  tag:'sale',       img:'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=80', desc:'Handwoven raffia tote with leather handles and zip closure. Lightweight summer essential.', sizes:[], date:2024 },
+  { id:7, name:'Gold Ankle Strap',  cat:'shoes',       sub:'Sandals',               price:135000, tag:'new',        img:'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=80', desc:'Strappy sandal with gold-tone buckle and cushioned footbed. Goes with everything.', sizes:['36','37','38','39','40','41'], date:2025 },
+  { id:8, name:'Braided Leather Belt', cat:'accessories', sub:'Belt',               price:65000,  tag:'',           img:'https://images.unsplash.com/photo-1611010344444-5f9e4d86a6d8?w=600&q=80', desc:'Hand-plaited genuine leather belt with antique brass buckle. Fits waist 26–34 inches.', sizes:['S','M','L','XL'], date:2024 },
+  { id:9, name:'Classic Block Pump', cat:'shoes',      sub:'Block Heel',            price:195000, tag:'',           img:'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=80', desc:'Closed-toe pump with a stable 7cm block heel. Office-to-dinner versatility.', sizes:['36','37','38','39','40','41'], date:2024 },
+  { id:10,name:'Nude Ballet Flat',  cat:'shoes',       sub:'Ballet Flats',          price:120000, tag:'bestseller', img:'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&q=80', desc:'Butter-soft leather ballet flat with a rounded toe. The wardrobe essential.', sizes:['36','37','38','39','40','41'], date:2023 },
+  { id:11,name:'Chain Evening Bag', cat:'bags',        sub:'Evening Clutch',        price:178000, tag:'limited',    img:'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80', desc:'Quilted satin clutch with detachable gold chain. Holds phone, cards, and lipstick.', sizes:[], date:2025 },
+  { id:12,name:'Sport Runner',      cat:'shoes',       sub:'Athletic Shoes',        price:230000, tag:'',           img:'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80', desc:'High-performance running silhouette with knit upper and rubber outsole. Style meets sport.', sizes:['37','38','39','40','41','42'], date:2025 },
+  { id:13,name:'Structured Satchel',cat:'bags',        sub:'Work Bag',              price:285000, tag:'bestseller', img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80', desc:'Rigid satchel with double top handles and shoulder strap. Laptop fits up to 13 inches.', sizes:[], date:2024 },
+  { id:14,name:'Slim Leather Wallet',cat:'accessories',sub:'Wallet',                price:55000,  tag:'new',        img:'https://images.unsplash.com/photo-1611010344444-5f9e4d86a6d8?w=600&q=80', desc:'Slim bifold wallet with 6 card slots and note compartment. Full-grain leather.', sizes:[], date:2025 },
+  { id:15,name:'Platform Wedge',    cat:'shoes',       sub:'Wedge Sandal',          price:175000, tag:'sale',       img:'https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=600&q=80', desc:'Espadrille wedge with ankle tie and cushioned platform. Perfect for summer days.', sizes:['36','37','38','39','40'], date:2024 },
+  { id:16,name:'Silk Scarf Belt',   cat:'accessories', sub:'Accessory',             price:48000,  tag:'new',        img:'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=80', desc:'100% silk printed scarf that doubles as a belt or bag accessory. Versatile luxury.', sizes:['One Size'], date:2025 },
+];
+
+const OWNER_WA = '256700000000'; // WhatsApp number without +
+let activeCategory = 'all';
+let activeTag = '';
+let maxPrice = 400000;
+let sortMode = 'featured';
+let wishlist = new Set();
+let cart = 0;
+let qvProduct = null;
+let viewMode = 'grid';
+let visibleCount = 0;
+const PAGE_SIZE = 12;
+let showAll = false;
+
+// ═══ RENDER ═══
+function fmt(n){ return 'UGX '+n.toLocaleString(); }
+
+function filteredProducts(){
+  let list = PRODUCTS.filter(p => {
+    if(activeCategory !== 'all' && p.cat !== activeCategory) return false;
+    if(p.price > maxPrice) return false;
+    if(activeTag && p.tag !== activeTag) return false;
+    return true;
+  });
+  // sort
+  if(sortMode==='price-asc')   list.sort((a,b)=>a.price-b.price);
+  if(sortMode==='price-desc')  list.sort((a,b)=>b.price-a.price);
+  if(sortMode==='newest')      list.sort((a,b)=>b.date-a.date);
+  if(sortMode==='name-asc')    list.sort((a,b)=>a.name.localeCompare(b.name));
+  return list;
+}
+
+function renderProducts(){
+  const grid = document.getElementById('prodGrid');
+  const empty = document.getElementById('emptyState');
+  const list = filteredProducts();
+  const toShow = showAll ? list : list.slice(0, PAGE_SIZE);
+
+  grid.innerHTML = '';
+  if(!list.length){ empty.classList.add('show'); document.getElementById('visibleCount').textContent='0'; document.getElementById('loadMoreWrap').style.display='none'; return; }
+  empty.classList.remove('show');
+  document.getElementById('visibleCount').textContent = list.length;
+  document.getElementById('loadMoreWrap').style.display = list.length > PAGE_SIZE && !showAll ? 'block' : 'none';
+
+  toShow.forEach((p,i) => {
+    const card = document.createElement('div');
+    card.className = 'product-card fade-in';
+    card.style.animationDelay = (i%PAGE_SIZE * 0.04)+'s';
+    card.innerHTML = `
+      <div class="product-img">
+        <img src="${p.img}" alt="${p.name}" loading="lazy"/>
+        ${p.tag ? `<span class="product-badge ${p.tag==='sale'?'badge-sale':''}">${p.tag.charAt(0).toUpperCase()+p.tag.slice(1)}</span>`:''}
+        <button class="wish-icon ${wishlist.has(p.id)?'liked':''}" data-id="${p.id}" title="Wishlist">♡</button>
+        <div class="card-actions">
+          <button class="ca-btn" data-id="${p.id}" data-action="qv">Quick View</button>
+          <button class="ca-btn" data-id="${p.id}" data-action="enquire">Enquire</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-sub">${p.sub}</div>
+        <div class="product-price">${fmt(p.price)}${p.tag==='sale'?`<span class="price-old">${fmt(Math.round(p.price*1.2))}</span>`:''}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  // events
+  grid.querySelectorAll('[data-action="qv"]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openQV(parseInt(b.dataset.id))}));
+  grid.querySelectorAll('[data-action="enquire"]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();enquireWA(parseInt(b.dataset.id))}));
+  grid.querySelectorAll('.wish-icon').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();toggleWish(parseInt(b.dataset.id),b)}));
+  grid.querySelectorAll('.product-card').forEach(card=>{
+    const id=parseInt(card.querySelector('.wish-icon').dataset.id);
+    card.addEventListener('click',()=>openQV(id));
+  });
+  updateCounts();
+}
+
+function updateCounts(){
+  ['all','shoes','bags','accessories'].forEach(cat=>{
+    const el=document.getElementById('cnt-'+cat);
+    if(!el) return;
+    const saved={category:activeCategory,tag:activeTag,price:maxPrice};
+    activeCategory=cat==='all'?'all':cat;
+    el.textContent=filteredProducts().length;
+    activeCategory=saved.category;
+  });
+}
+
+// ═══ FILTERS ═══
+function setCategory(cat){
+  activeCategory=cat; activeTag='';
+  // sidebar
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
+  // mobile
+  document.querySelectorAll('.mf-pill').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
+  // tag pills off
+  document.querySelectorAll('.tag-pill').forEach(b=>b.classList.remove('active'));
+  showAll=false;
+  renderProducts();
+}
+
+document.querySelectorAll('.cat-btn').forEach(b=>b.addEventListener('click',()=>setCategory(b.dataset.cat)));
+document.querySelectorAll('.mf-pill').forEach(b=>b.addEventListener('click',()=>{
+  // handle tag-based mobile pills
+  if(b.dataset.cat==='new'){activeTag='new';activeCategory='all';}
+  else if(b.dataset.cat==='bestseller'){activeTag='bestseller';activeCategory='all';}
+  else{activeTag='';setCategory(b.dataset.cat);return;}
+  document.querySelectorAll('.mf-pill').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  showAll=false;
+  renderProducts();
+}));
+
+// tag pills
+document.querySelectorAll('.tag-pill').forEach(b=>b.addEventListener('click',()=>{
+  const same=b.classList.contains('active');
+  document.querySelectorAll('.tag-pill').forEach(x=>x.classList.remove('active'));
+  activeTag = same?'':(b.classList.add('active'),b.dataset.tag);
+  if(same) activeTag='';
+  showAll=false;
+  renderProducts();
+}));
+
+// price slider
+const slider=document.getElementById('priceSlider');
+const priceLabel=document.getElementById('priceLabel');
+slider.addEventListener('input',()=>{
+  maxPrice=parseInt(slider.value);
+  priceLabel.textContent='UGX '+Math.round(maxPrice/1000)+'K';
+  renderProducts();
+});
+
+// sort
+document.getElementById('sortSel').addEventListener('change',e=>{sortMode=e.target.value;renderProducts();});
+
+// clear
+document.getElementById('clearAll').addEventListener('click',()=>{
+  activeCategory='all';activeTag='';maxPrice=400000;sortMode='featured';showAll=false;
+  slider.value=400000;priceLabel.textContent='UGX 400K';
+  document.getElementById('sortSel').value='featured';
+  document.querySelectorAll('.tag-pill,.mf-pill').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.mf-pill[data-cat="all"]').forEach(b=>b.classList.add('active'));
+  setCategory('all');
+});
+
+// sidebar collapse
+document.querySelectorAll('.sb-title').forEach(t=>t.addEventListener('click',()=>{
+  t.classList.toggle('collapsed');
+  document.getElementById(t.dataset.target).classList.toggle('collapsed');
+}));
+
+// view toggle
+document.getElementById('gridView').addEventListener('click',()=>{viewMode='grid';document.getElementById('prodGrid').classList.remove('list-view');document.getElementById('gridView').classList.add('active');document.getElementById('listView').classList.remove('active')});
+document.getElementById('listView').addEventListener('click',()=>{viewMode='list';document.getElementById('prodGrid').classList.add('list-view');document.getElementById('listView').classList.add('active');document.getElementById('gridView').classList.remove('active')});
+
+// load more
+document.getElementById('loadMoreBtn').addEventListener('click',()=>{showAll=true;renderProducts();});
+
+// ═══ WISHLIST ═══
+function toggleWish(id,btn){
+  if(wishlist.has(id)){wishlist.delete(id);btn.classList.remove('liked');showToast('Removed from wishlist');}
+  else{wishlist.add(id);btn.classList.add('liked');showToast('♡ Added to wishlist');}
+}
+
+// ═══ ENQUIRE via WhatsApp ═══
+function enquireWA(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  const msg=`Hello Grace Collections! 👋\n\nI'm interested in:\n*${p.name}*\nCategory: ${p.sub}\nPrice: ${fmt(p.price)}\n\nCould you please provide more details? Thank you!`;
+  window.open(`https://wa.me/${OWNER_WA}?text=${encodeURIComponent(msg)}`,'_blank');
+  cart++;
+  document.getElementById('cartCount').textContent=cart;
+  showToast('Opening WhatsApp…');
+}
+
+// ═══ QUICK VIEW ═══
+function openQV(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  qvProduct=p;
+  document.getElementById('qvImg').src=p.img;
+  document.getElementById('qvImg').alt=p.name;
+  document.getElementById('qvCat').textContent=p.sub;
+  document.getElementById('qvName').textContent=p.name;
+  document.getElementById('qvPrice').textContent=fmt(p.price);
+  document.getElementById('qvDesc').textContent=p.desc;
+  const sz=document.getElementById('qvSizes');
+  sz.innerHTML='';
+  p.sizes.forEach(s=>{const b=document.createElement('button');b.className='sz-btn';b.textContent=s;b.addEventListener('click',()=>{sz.querySelectorAll('.sz-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active')});sz.appendChild(b);});
+  document.getElementById('qvOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+document.getElementById('qvClose').addEventListener('click',closeQV);
+document.getElementById('qvOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('qvOverlay'))closeQV()});
+function closeQV(){document.getElementById('qvOverlay').classList.remove('open');document.body.style.overflow='';}
+
+document.getElementById('qvEnquire').addEventListener('click',()=>{if(qvProduct){closeQV();enquireWA(qvProduct.id);}});
+document.getElementById('qvWish').addEventListener('click',()=>{
+  if(!qvProduct) return;
+  if(wishlist.has(qvProduct.id)){wishlist.delete(qvProduct.id);document.getElementById('qvWish').textContent='♡ Wishlist';showToast('Removed from wishlist');}
+  else{wishlist.add(qvProduct.id);document.getElementById('qvWish').textContent='♥ Wishlisted';showToast('Added to wishlist');}
+});
+
+// ═══ TOAST ═══
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('cartToast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ═══ INIT ═══
+renderProducts();
+</script>
+</body>
+</html>

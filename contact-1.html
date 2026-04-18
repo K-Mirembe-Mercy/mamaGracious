@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact – Grace Collections</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── CONTACT LAYOUT ── */
+#contact-body{display:grid;grid-template-columns:1fr 1.35fr;background:var(--dark);min-height:75vh}
+.contact-info{padding:6rem 4.5rem;border-right:1px solid rgba(255,255,255,.06)}
+.contact-info .section-title{color:var(--cream);margin-bottom:2.5rem}
+.c-items{display:flex;flex-direction:column;gap:1.8rem}
+.c-item{display:flex;gap:1.2rem;align-items:flex-start}
+.c-ico{width:44px;height:44px;flex-shrink:0;border:1px solid rgba(184,151,62,.3);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.1rem}
+.c-label{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.c-val{color:rgba(250,247,242,.72);font-size:.86rem;line-height:1.6}
+.c-val a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.15);transition:border-color .3s}
+.c-val a:hover{border-color:var(--gold)}
+/* quick action buttons */
+.quick-actions{margin-top:3rem;display:flex;flex-direction:column;gap:.8rem}
+.qa-label{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.qa-btn{display:flex;align-items:center;gap:.8rem;padding:.9rem 1.3rem;border:1px solid rgba(255,255,255,.1);color:var(--cream);font-family:var(--ff-sans);font-size:.78rem;cursor:pointer;background:none;transition:background .3s,border-color .3s;text-align:left;width:100%}
+.qa-btn:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.25)}
+.qa-btn.wa{border-color:rgba(37,211,102,.35)}
+.qa-btn.wa:hover{background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.7)}
+.qa-btn.em{border-color:rgba(184,151,62,.35)}
+.qa-btn.em:hover{background:rgba(184,151,62,.1);border-color:var(--gold)}
+.qa-icon{font-size:1.2rem;flex-shrink:0}
+.qa-text small{display:block;font-size:.62rem;color:var(--muted);margin-top:.1rem}
+
+/* ── FORM AREA ── */
+.contact-form-col{padding:6rem 4.5rem;display:flex;flex-direction:column;justify-content:center}
+.form-header{margin-bottom:2.5rem}
+.form-header .section-title{color:var(--cream);margin-bottom:.5rem}
+.form-header p{color:var(--muted);font-size:.83rem;line-height:1.7}
+
+/* send method toggle */
+.send-method{display:flex;gap:.6rem;margin-bottom:2rem;background:rgba(255,255,255,.04);padding:.4rem;border-radius:2px}
+.sm-btn{flex:1;padding:.65rem;font-family:var(--ff-sans);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;border:none;background:none;color:var(--muted);cursor:pointer;transition:.3s}
+.sm-btn.active{background:var(--gold);color:var(--white)}
+
+.cform{display:flex;flex-direction:column;gap:1.1rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.fg{display:flex;flex-direction:column;gap:.45rem;position:relative}
+.flabel{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.finput,.fselect,.ftxt{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--cream);padding:.9rem 1.1rem;font-family:var(--ff-sans);font-size:.84rem;outline:none;transition:border-color .3s,background .3s;width:100%}
+.finput:focus,.ftxt:focus{border-color:var(--gold);background:rgba(255,255,255,.07)}
+.finput.error,.ftxt.error{border-color:#e05252}
+.ftxt{resize:vertical;min-height:115px}
+.fselect{appearance:none;cursor:pointer}
+.ferr{font-size:.62rem;color:#e05252;margin-top:.15rem;display:none}
+.ferr.show{display:block}
+
+/* char count */
+.char-count{font-size:.6rem;color:var(--muted);text-align:right;margin-top:.2rem}
+
+/* submit btn */
+.fsubmit{background:var(--gold);color:var(--white);border:none;cursor:pointer;padding:1rem 2.5rem;font-family:var(--ff-sans);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;align-self:flex-start;transition:opacity .3s,background .3s;display:flex;align-items:center;gap:.6rem;min-width:200px;justify-content:center}
+.fsubmit:hover{opacity:.85}
+.fsubmit:disabled{opacity:.5;cursor:not-allowed}
+.fsubmit .spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:var(--white);border-radius:50%;animation:spin .7s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fsubmit.loading .spinner{display:block}
+.fsubmit.loading .btn-text{display:none}
+
+/* success state */
+.success-banner{display:none;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.35);padding:2rem;text-align:center;margin-top:1.5rem}
+.success-banner.show{display:block}
+.success-banner h3{font-family:var(--ff-serif);font-size:1.6rem;color:var(--cream);margin-bottom:.5rem}
+.success-banner p{color:var(--muted);font-size:.83rem;line-height:1.7}
+.success-icon{font-size:2rem;margin-bottom:.8rem}
+
+/* delivery note */
+.delivery-note{font-size:.68rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;margin-top:.3rem;padding:.7rem 1rem;background:rgba(255,255,255,.04);border-left:2px solid var(--gold)}
+
+/* ── MAP ── */
+#map-section{background:#1e1812}
+.map-embed{width:100%;height:360px;border:none;filter:grayscale(25%) contrast(1.1)}
+.map-bar{background:var(--dark);padding:1.4rem 3rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.map-bar-txt{font-size:.79rem;color:rgba(250,247,242,.6);line-height:1.5}
+.map-bar-txt strong{color:var(--cream)}
+.map-dir{margin-left:auto;font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(184,151,62,.4);padding:.55rem 1.3rem;transition:.3s;white-space:nowrap}
+.map-dir:hover{background:var(--gold);color:var(--white);border-color:var(--gold)}
+
+/* ── HOURS ── */
+#hours{padding:5rem 3rem;background:var(--cream)}
+.hours-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;max-width:920px;margin:0 auto}
+.hours-table{width:100%;border-collapse:collapse}
+.hours-table tr{border-bottom:1px solid rgba(0,0,0,.07)}
+.hours-table td{padding:.9rem 0;font-size:.84rem;color:var(--muted)}
+.hours-table td:first-child{font-weight:500;color:var(--dark)}
+.hours-table td:last-child{text-align:right;color:var(--gold)}
+.hours-today td{background:rgba(184,151,62,.05)}
+.hours-note{background:var(--ivory);padding:2rem 2rem;border-left:3px solid var(--gold);margin-top:1.5rem}
+.hours-note p{font-size:.82rem;color:var(--muted);line-height:1.8}
+
+@media(max-width:1024px){#contact-body{grid-template-columns:1fr}.contact-info{border-right:none;border-bottom:1px solid rgba(255,255,255,.06);padding:4rem 2.5rem}.contact-form-col{padding:4rem 2.5rem}.hours-inner{grid-template-columns:1fr;gap:2rem}}
+@media(max-width:600px){.frow{grid-template-columns:1fr}#hours{padding:3.5rem 1.5rem}.map-bar{padding:1.2rem 1.5rem;flex-direction:column;align-items:flex-start}.map-dir{margin-left:0}.send-method{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><span>Grace</span> Collections</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="shop.html">Shop</a>
+    <a href="about.html">About</a><a href="gallery.html">Gallery</a><a href="contact.html" class="active">Contact</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Visit Us</a>
+  <div class="hamburger" id="ham"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html" onclick="closeMob()">Home</a><a href="shop.html" onclick="closeMob()">Shop</a>
+  <a href="about.html" onclick="closeMob()">About</a><a href="gallery.html" onclick="closeMob()">Gallery</a>
+  <a href="contact.html" onclick="closeMob()">Contact</a>
+</div>
+
+<div class="page-hero">
+  <img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=1400&q=80" alt="Contact"/>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <span class="page-tag">Get in Touch</span>
+    <h1 class="page-title">Visit <em>Grace</em><br/>Collections</h1>
+  </div>
+</div>
+
+<section id="contact-body">
+  <!-- LEFT: Info -->
+  <div class="contact-info reveal-l">
+    <span class="section-tag">Find Us</span>
+    <h2 class="section-title">We're in<br/><em>Mutungo</em></h2>
+    <div class="c-items">
+      <div class="c-item">
+        <div class="c-ico">📍</div>
+        <div><div class="c-label">Location</div><div class="c-val">Mutungo Hill, Kampala<br/>Uganda</div></div>
+      </div>
+      <div class="c-item">
+        <div class="c-ico">📞</div>
+        <div><div class="c-label">Phone & WhatsApp</div><div class="c-val"><a href="tel:+256700000000">+256 700 000 000</a></div></div>
+      </div>
+      <div class="c-item">
+        <div class="c-ico">📧</div>
+        <div><div class="c-label">Email</div><div class="c-val"><a href="mailto:hello@gracecollections.ug">hello@gracecollections.ug</a></div></div>
+      </div>
+      <div class="c-item">
+        <div class="c-ico">📸</div>
+        <div><div class="c-label">Instagram</div><div class="c-val"><a href="#">@gracecollections.ug</a></div></div>
+      </div>
+    </div>
+
+    <!-- Quick contact buttons -->
+    <div class="quick-actions">
+      <div class="qa-label">Quick Contact</div>
+      <button class="qa-btn wa" id="waQuick">
+        <span class="qa-icon">💬</span>
+        <div class="qa-text">Chat on WhatsApp<small>Usually replies in minutes</small></div>
+      </button>
+      <button class="qa-btn em" id="emQuick">
+        <span class="qa-icon">✉️</span>
+        <div class="qa-text">Send an Email<small>hello@gracecollections.ug</small></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- RIGHT: Form -->
+  <div class="contact-form-col reveal-r">
+    <div class="form-header">
+      <span class="section-tag">Message Us</span>
+      <h2 class="section-title">We'd love to<br/><em>hear from you</em></h2>
+      <p>Fill in the form and we'll reach out on WhatsApp, Email, or both.</p>
+    </div>
+
+    <!-- Send method selector -->
+    <div class="send-method" id="sendMethod">
+      <button class="sm-btn active" data-method="both">📱 WhatsApp + Email</button>
+      <button class="sm-btn" data-method="whatsapp">💬 WhatsApp Only</button>
+      <button class="sm-btn" data-method="email">✉️ Email Only</button>
+    </div>
+
+    <div class="delivery-note" id="deliveryNote">
+      <span>📤</span>
+      <span>Your message will be sent via <strong id="methodDisplay">WhatsApp & Email</strong></span>
+    </div>
+
+    <div class="cform" id="contactForm">
+      <div class="frow">
+        <div class="fg">
+          <label class="flabel">First Name *</label>
+          <input type="text" class="finput" id="firstName" placeholder="Your name"/>
+          <span class="ferr" id="errFirst">Please enter your first name</span>
+        </div>
+        <div class="fg">
+          <label class="flabel">Last Name</label>
+          <input type="text" class="finput" id="lastName" placeholder="Your surname"/>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="flabel">Phone / WhatsApp *</label>
+        <input type="tel" class="finput" id="phone" placeholder="+256 700 000 000"/>
+        <span class="ferr" id="errPhone">Please enter your phone number</span>
+      </div>
+      <div class="fg">
+        <label class="flabel">Email Address</label>
+        <input type="email" class="finput" id="email" placeholder="yourname@email.com"/>
+        <span class="ferr" id="errEmail">Please enter a valid email address</span>
+      </div>
+      <div class="fg">
+        <label class="flabel">I'm Interested In *</label>
+        <select class="fselect finput" id="interest">
+          <option value="">Select a category…</option>
+          <option value="Shoes">👠 Shoes</option>
+          <option value="Bags">👜 Bags</option>
+          <option value="Accessories">✨ Accessories / Belts</option>
+          <option value="Multiple Items">🛍️ Multiple Items</option>
+          <option value="General Enquiry">💬 General Enquiry</option>
+          <option value="Custom Order">🌟 Custom / Special Order</option>
+        </select>
+        <span class="ferr" id="errInterest">Please select a category</span>
+      </div>
+      <div class="fg">
+        <label class="flabel">Message *</label>
+        <textarea class="ftxt" id="message" placeholder="Tell us what you're looking for, your size, budget, or anything else…" maxlength="500"></textarea>
+        <span class="ferr" id="errMsg">Please write a message</span>
+        <div class="char-count"><span id="charCount">0</span> / 500</div>
+      </div>
+
+      <button class="fsubmit" id="submitBtn">
+        <div class="spinner"></div>
+        <span class="btn-text">Send Message →</span>
+      </button>
+    </div>
+
+    <!-- Success Banner -->
+    <div class="success-banner" id="successBanner">
+      <div class="success-icon">✅</div>
+      <h3>Message Sent!</h3>
+      <p id="successText">Your message has been sent. Grace will get back to you shortly!</p>
+      <button class="btn-outline" style="margin-top:1.5rem;border-color:rgba(37,211,102,.5);color:#4ade80" id="sendAnother">Send Another Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map-section">
+  <iframe class="map-embed"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.757!2d32.624!3d0.316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbbf2e67c4b1d%3A0x6a6ee9f05d6a1e3a!2sMutungo%2C%20Kampala%2C%20Uganda!5e0!3m2!1sen!2sug!4v1700000000000"
+    allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <div class="map-bar">
+    <div style="font-size:1.4rem;color:var(--gold)">📍</div>
+    <div class="map-bar-txt"><strong>Grace Collections</strong><br/>Mutungo Hill · Kampala · Uganda</div>
+    <a href="https://maps.google.com/?q=Mutungo+Kampala+Uganda" target="_blank" class="map-dir">Get Directions →</a>
+  </div>
+</section>
+
+<!-- HOURS -->
+<section id="hours">
+  <div style="text-align:center;margin-bottom:3.5rem" class="reveal">
+    <span class="section-tag">Opening Hours</span>
+    <h2 class="section-title">When to <em>Visit</em></h2>
+  </div>
+  <div class="hours-inner">
+    <div class="reveal-l">
+      <table class="hours-table" id="hoursTable">
+        <tr data-day="1"><td>Monday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr data-day="2"><td>Tuesday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr data-day="3"><td>Wednesday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr data-day="4"><td>Thursday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr data-day="5"><td>Friday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr data-day="6"><td>Saturday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr data-day="0"><td>Sunday</td><td>11:00 AM – 5:00 PM</td></tr>
+      </table>
+    </div>
+    <div class="reveal-r">
+      <div class="hours-note">
+        <span class="section-tag">Good to Know</span>
+        <p>Walk-ins are always welcome. For a personal styling session or to reserve a specific item, WhatsApp us ahead of your visit — we'll have everything ready for you.</p>
+      </div>
+      <a href="https://wa.me/256700000000?text=Hello%20Grace%20Collections!%20I'd%20like%20to%20book%20a%20visit." target="_blank" class="btn-gold" style="display:inline-block;margin-top:1.8rem">Book a Visit via WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo"><span>Grace</span> Collections</div><p class="footer-about">Luxury shoes, bags & accessories · Mutungo, Kampala.</p><div class="footer-social"><a href="#" class="social-btn">IG</a><a href="#" class="social-btn">FB</a><a href="#" class="social-btn">WA</a><a href="#" class="social-btn">TT</a></div></div>
+    <div><div class="footer-col-title">Shop</div><ul class="footer-links"><li><a href="shop.html">Shoes</a></li><li><a href="shop.html">Bags</a></li><li><a href="shop.html">Accessories</a></li></ul></div>
+    <div><div class="footer-col-title">Pages</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="gallery.html">Gallery</a></li></ul></div>
+    <div><div class="footer-col-title">Visit Us</div><ul class="footer-links"><li><a href="#">Mutungo, Kampala</a></li><li><a href="#">Mon–Sat 9AM–7PM</a></li><li><a href="tel:+256700000000">+256 700 000 000</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2025 Grace Collections · Mutungo, Kampala · Uganda</div><div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+</footer>
+<div id="back-top">↑</div>
+<script src="shared.js"></script>
+<script>
+// ═══ CONFIG — update these with real details ═══
+const OWNER_PHONE = '256700000000';   // WhatsApp: no + or spaces
+const OWNER_EMAIL = 'hello@gracecollections.ug';
+
+// ═══ HIGHLIGHT TODAY'S HOURS ═══
+const today = new Date().getDay();
+document.querySelectorAll('#hoursTable tr').forEach(tr=>{
+  if(parseInt(tr.dataset.day)===today){ tr.classList.add('hours-today'); tr.cells[0].textContent+=' (Today)'; }
+});
+
+// ═══ SEND METHOD ═══
+let sendMethod = 'both';
+const methodDisplay = { both:'WhatsApp & Email', whatsapp:'WhatsApp', email:'Email' };
+document.querySelectorAll('.sm-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.sm-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    sendMethod = b.dataset.method;
+    document.getElementById('methodDisplay').textContent = methodDisplay[sendMethod];
+  });
+});
+
+// ═══ CHAR COUNT ═══
+document.getElementById('message').addEventListener('input',function(){
+  document.getElementById('charCount').textContent = this.value.length;
+});
+
+// ═══ QUICK BUTTONS ═══
+document.getElementById('waQuick').addEventListener('click',()=>{
+  const msg='Hello Grace Collections! 👋 I\'d like to enquire about your products. Please assist me.';
+  window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`,'_blank');
+});
+document.getElementById('emQuick').addEventListener('click',()=>{
+  window.location.href=`mailto:${OWNER_EMAIL}?subject=Enquiry – Grace Collections`;
+});
+
+// ═══ VALIDATION ═══
+function validate(){
+  let ok=true;
+  const fields=[
+    {id:'firstName',err:'errFirst',check:v=>v.trim().length>1},
+    {id:'phone',    err:'errPhone', check:v=>v.replace(/\D/g,'').length>=9},
+    {id:'interest', err:'errInterest',check:v=>v!==''},
+    {id:'message',  err:'errMsg',   check:v=>v.trim().length>5},
+  ];
+  // email only required if send method includes email
+  if(sendMethod==='both'||sendMethod==='email'){
+    fields.push({id:'email',err:'errEmail',check:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)||v.trim()===''});
+  }
+  fields.forEach(f=>{
+    const el=document.getElementById(f.id);
+    const err=document.getElementById(f.err);
+    if(!el||!err) return;
+    const valid=f.check(el.value);
+    el.classList.toggle('error',!valid);
+    err.classList.toggle('show',!valid);
+    if(!valid) ok=false;
+  });
+  return ok;
+}
+
+// ═══ BUILD MESSAGE ═══
+function buildWAMessage(){
+  const fn = document.getElementById('firstName').value.trim();
+  const ln = document.getElementById('lastName').value.trim();
+  const ph = document.getElementById('phone').value.trim();
+  const em = document.getElementById('email').value.trim();
+  const it = document.getElementById('interest').value;
+  const mg = document.getElementById('message').value.trim();
+  return `Hello Grace Collections! 👋\n\n*New Enquiry from the Website*\n\n👤 *Name:* ${fn} ${ln}\n📞 *Phone:* ${ph}${em?`\n📧 *Email:* ${em}`:''}\n🛍️ *Interested In:* ${it}\n\n💬 *Message:*\n${mg}\n\n_Sent from gracecollections.ug_`;
+}
+
+function buildEmailBody(){
+  const fn = document.getElementById('firstName').value.trim();
+  const ln = document.getElementById('lastName').value.trim();
+  const ph = document.getElementById('phone').value.trim();
+  const em = document.getElementById('email').value.trim();
+  const it = document.getElementById('interest').value;
+  const mg = document.getElementById('message').value.trim();
+  return `New enquiry from Grace Collections website:\n\nName: ${fn} ${ln}\nPhone: ${ph}\nEmail: ${em}\nInterested In: ${it}\n\nMessage:\n${mg}`;
+}
+
+// ═══ SUBMIT ═══
+document.getElementById('submitBtn').addEventListener('click',()=>{
+  if(!validate()) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  // Small delay for UX
+  setTimeout(()=>{
+    let sent = [];
+
+    // ── Send via WhatsApp ──
+    if(sendMethod==='both'||sendMethod==='whatsapp'){
+      const waMsg = buildWAMessage();
+      window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(waMsg)}`,'_blank');
+      sent.push('WhatsApp');
+    }
+
+    // ── Send via Email (mailto opens mail client) ──
+    if(sendMethod==='both'||sendMethod==='email'){
+      const fn=document.getElementById('firstName').value.trim();
+      const ln=document.getElementById('lastName').value.trim();
+      const it=document.getElementById('interest').value;
+      const body=buildEmailBody();
+      const replyTo=document.getElementById('email').value.trim();
+      const mailtoLink=`mailto:${OWNER_EMAIL}?subject=${encodeURIComponent('Enquiry: '+it+' – '+fn+' '+ln)}&body=${encodeURIComponent(body)}${replyTo?'&reply-to='+encodeURIComponent(replyTo):''}`;
+      // Small delay so both windows open cleanly
+      setTimeout(()=>{ window.location.href=mailtoLink; }, sent.length?800:0);
+      sent.push('Email');
+    }
+
+    btn.classList.remove('loading');
+    btn.disabled = false;
+
+    // Show success
+    document.getElementById('contactForm').style.display='none';
+    const banner=document.getElementById('successBanner');
+    banner.classList.add('show');
+    document.getElementById('successText').textContent =
+      `Your message has been sent via ${sent.join(' & ')}. Grace will get back to you very soon — usually within the hour!`;
+
+    // Reset
+    document.getElementById('sendAnother').addEventListener('click',()=>{
+      document.getElementById('contactForm').reset();
+      document.getElementById('contactForm').style.display='flex';
+      banner.classList.remove('show');
+      document.getElementById('charCount').textContent='0';
+      document.querySelectorAll('.finput,.ftxt').forEach(el=>el.classList.remove('error'));
+      document.querySelectorAll('.ferr').forEach(el=>el.classList.remove('show'));
+    });
+
+  }, 1200);
+});
+
+// Remove error on input
+document.querySelectorAll('.finput,.ftxt,.fselect').forEach(el=>{
+  el.addEventListener('input',()=>{ el.classList.remove('error'); const err=document.getElementById('err'+el.id.charAt(0).toUpperCase()+el.id.slice(1)); if(err) err.classList.remove('show'); });
+});
+</script>
+</body>
+</html>
