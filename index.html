@@ -172,12 +172,14 @@
 <style>
   .owner-card {
     width: 240px;
+    max-width: 90%;
     padding: 22px;
     background: #ffffff;
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 12px 30px rgba(0,0,0,0.12);
     transition: 0.3s ease;
+    margin: auto;
   }
 
   .owner-card:hover {
@@ -203,6 +205,27 @@
     margin: 0;
     font-size: 13px;
     color: #666;
+  }
+
+  /* RESPONSIVE DESIGN */
+  @media (max-width: 600px) {
+    .owner-card {
+      width: 85%;
+      padding: 18px;
+    }
+
+    .owner-avatar img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .owner-info h3 {
+      font-size: 18px;
+    }
+
+    .owner-info p {
+      font-size: 12px;
+    }
   }
 </style>
 
