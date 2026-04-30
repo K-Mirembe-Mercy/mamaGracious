@@ -1,1 +1,10 @@
 
+    <!--== OWNER PHOTO: Replace this div with <img src="grace-photo.jpg" alt="Grace"/> ==-->
+    
+    <div class="own-placeholder">
+      <div class="own-ph-circle">
+        <svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="35" r="22" fill="var(--sand)"/><ellipse cx="50" cy="88" rx="38" ry="22" fill="var(--sand)"/><img src=" file_00000000975871fdbdcf03fb7de25e04.png " alt="Sylivia"/></svg>
+      </div>
+      <div class="own-ph-label" >Add Owner Photo Here</div>
+    </div>
+    <!--== END OWNER PHOTO ==-->
